@@ -4,6 +4,7 @@ import pandas as pd
 from statutils import vis
 
 # TODO: create an object to store the count information so we don't have to pass it everywhere
+# TODO: use numpy.digitize to assign cells to bins
 def get_bins(x, numbins):
     return np.concatenate([
         np.linspace(x.min()-1e-5, np.percentile(x, 99), numbins),
@@ -53,8 +54,10 @@ def local_density_plt(cells):
     countsxy = count_xy(cells[:,0], cells[:,1], 50)
     p = local_density(countsxy)
     vis.matshow(p, origin='lower', colorbar=True, height=6, cmap='seismic')
+    return p
 
-def local_mean_plt(cells, z):
+def local_mean_plt(cells, z, ax=None):
     countsxy = count_xy(cells[:,0], cells[:,1], 50)
     mu = local_mean(z, countsxy)
-    vis.matshow(mu, origin='lower', colorbar=True, height=6, cmap='seismic')
+    vis.matshow(mu, origin='lower', colorbar=True, height=6, cmap='seismic', ax=ax)
+    return mu
