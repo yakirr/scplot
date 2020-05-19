@@ -50,10 +50,12 @@ def local_density(countsxy, **kwargs):
     return counts / counts.sum()
 
 # compute the number of cells in each bin in a 2D grid built using 50 bins for each axis
-def local_density_plt(cells):
+def local_density_plt(cells, **kwargs):
+    matshow_kw = {'cmap':'RdGy', 'height':6, 'colorbar':True}
+    matshow_kw.update(kwargs)
     countsxy = count_xy(cells[:,0], cells[:,1], 50)
     p = local_density(countsxy)
-    vis.matshow(p, origin='lower', colorbar=True, height=6, cmap='seismic')
+    vis.matshow(p, origin='lower', **matshow_kw)
     return p
 
 def local_mean_plt(cells, z, ax=None):
